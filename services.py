@@ -1,7 +1,24 @@
 import cv2 as cv
 import numpy as np
 import json
+from types import SimpleNamespace
 
+# read json from config and return data
+def load_config_data(path: str):
+    with open(path, 'r') as f:
+        data = f.read()
+    # convert json to object
+    data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+    return data
+
+# helper to calculate if point is inside circle area
+def is_inside_circle(area_x, area_y, area_radius, culprit_x, culprit_y) -> bool:
+    return(
+        ( pow(culprit_x - area_x, 2) + pow(culprit_y - area_y, 2) )
+        < pow(area_radius, 2)
+    )
+
+# draw marker axes and id onto provided image
 def drawInfos(frame, markerCorner, markerId):
     corners = markerCorner.reshape((4, 2))
     (topLeft, topRight, botRight, botLeft) = corners

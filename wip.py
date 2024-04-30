@@ -2,7 +2,7 @@ import json
 from types import SimpleNamespace
 
 # helper to calculate if point is inside circle area
-def is_inside(area_x, area_y, area_radius, culprit_x, culprit_y) -> bool:
+def is_inside_circle(area_x, area_y, area_radius, culprit_x, culprit_y) -> bool:
     return(
         ( pow(culprit_x - area_x, 2) + pow(culprit_y - area_y, 2) )
         < pow(area_radius, 2)
