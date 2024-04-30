@@ -11,7 +11,7 @@ detector = cv.aruco.ArucoDetector(arucoDict, arucoParams)
 
 # warm up and make camera available
 stream = VideoStream(src=0).start()
-time.sleep(1.0)
+time.sleep(2.0)
 
 while True:
     frame = stream.read()

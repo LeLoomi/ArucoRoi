@@ -6,7 +6,7 @@ arucoDict = cv.aruco.getPredefinedDictionary(cv.aruco.DICT_4X4_1000)    # 1000 s
 arucoParams = cv.aruco.DetectorParameters()
 detector = cv.aruco.ArucoDetector(arucoDict, arucoParams)
 
-image = cv.imread("images/b1.png")
+image = cv.imread("images/raw1.png")
 
 (corners, ids, rejected) = detector.detectMarkers(image)
 
@@ -14,7 +14,7 @@ if len(corners) > 0:    # check if we even found a code
     ids = ids.flatten()
     # loop over all corners
     for (markerCorner, markerId) in zip(corners, ids):
-        frame = services.drawInfos(image, markerCorner, markerId)
+        image = services.drawInfos(image, markerCorner, markerId)
 
 # render output
 cv.imshow("Output", image)

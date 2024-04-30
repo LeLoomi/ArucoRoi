@@ -1,5 +1,6 @@
 import cv2 as cv
 import numpy as np
+import json
 
 def drawInfos(frame, markerCorner, markerId):
     corners = markerCorner.reshape((4, 2))
@@ -19,20 +20,19 @@ def drawInfos(frame, markerCorner, markerId):
         botLeft,
         np.add(botLeft, axisY),
         (255, 175, 5),
-        3
+        2
     )
     cv.arrowedLine(frame,
         botLeft,
         np.add(botLeft, axisX),
         (100, 5, 255),
-        3
+        2
     )
-    
     # draw marker IDs
     cv.putText(frame, str(markerId),
         (topLeft[0], topLeft[1] - 15),
         cv.FONT_HERSHEY_SIMPLEX,
-        1.25, (0, 0, 255), 3
+        1, (0, 0, 255), 2
     )
     
     return frame
