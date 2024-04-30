@@ -1,0 +1,24 @@
+{
+  "region_marker": [
+    {
+      "align_id": 620,
+      "align_name": "torso-centre",
+      "rois": [
+        {
+          "reg_name": "V1",
+          "reg_dX": -20,
+          "reg_dY": 0,
+          "reg_radius": 10,
+          "desired_marker_id": 601
+        },
+        {
+          "reg_name": "V2",
+          "reg_dX": 20,
+          "reg_dY": 0,
+          "reg_radius": 10,
+          "desired_marker_id": 602
+        }
+      ]
+    }
+  ]
+}
