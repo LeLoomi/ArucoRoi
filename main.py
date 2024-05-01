@@ -11,15 +11,17 @@ arucoParams = cv.aruco.DetectorParameters()
 detector = cv.aruco.ArucoDetector(arucoDict, arucoParams)
 
 data = services.load_config_data('./config.json')
-#frame = cv.imread('images/b1.png')
+current_corrects = []
 
 # warm up and make camera available
 stream = VideoStream(src=0).start()
 time.sleep(1.5)
 
+framei = 0
 while True:
+    current_corrects = []
     frame = stream.read()
-
+    time.sleep(0.1)    # to give us breathing room for our unoptimized calcs
     (corners, ids, rejected) = detector.detectMarkers(frame)
 
     if len(corners) > 0:    # check if we even found a marker
@@ -39,9 +41,7 @@ while True:
                             int((botLeft[1] + topRight[1]) / 2))
         
             for region_marker in data.region_marker:    # loop all markers
-                os.system('clear')
                 for roi in region_marker.rois:  # loop their rois
-                    print('\n+ ROI {} +'.format(roi.reg_name))
                     if region_marker.align_id in ids: 
                         # if we have a region marker
                         if region_marker.align_id == markerId:
@@ -61,16 +61,17 @@ while True:
                                 (100, 5, 255),
                                 3
                             )
+                        
                         # if we have a desired marker
                         if roi.desired_marker_id == markerId:
                             if services.is_inside_circle(
                                 roiCentre[0], roiCentre[1], roi.reg_radius,
                                 markerCentre[0], markerCentre[1]):
-                                print('Marker {} ✔'.format(markerId, roi.reg_name))
-                            else:
-                                print('Marker {} ✗'.format(markerId, roi.reg_name))
+                                current_corrects.append(markerId)
             
-            #frame = services.drawInfos(frame, markerCorner, markerId)
+            frame = services.drawInfos(frame, markerCorner, markerId)
+    os.system('clear')
+    print("Currently correct: ", current_corrects)
 
     # render output
     cv.imshow("Output", frame)

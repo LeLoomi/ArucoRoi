@@ -12,6 +12,19 @@
           "desired_marker_id": 601
         }
       ]
+    },
+    {
+      "align_id": 630,
+      "align_name": "torso-centre",
+      "rois": [
+        {
+          "reg_name": "V2",
+          "reg_dX": 0,
+          "reg_dY": 250,
+          "reg_radius": 300,
+          "desired_marker_id": 602
+        }
+      ]
     }
   ]
 }
