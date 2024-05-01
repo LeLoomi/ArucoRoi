@@ -14,14 +14,15 @@ data = services.load_config_data('./config.json')
 current_corrects = []
 
 # warm up and make camera available
-stream = VideoStream(src=0).start()
+stream = VideoStream(src=1).start()
 time.sleep(1.5)
 
 framei = 0
 while True:
+    frametime = time.time_ns()
     current_corrects = []
     frame = stream.read()
-    time.sleep(0.1)    # to give us breathing room for our unoptimized calcs
+    #time.sleep(0.1)    # to give us breathing room for our unoptimized calcs
     (corners, ids, rejected) = detector.detectMarkers(frame)
 
     if len(corners) > 0:    # check if we even found a marker
@@ -32,10 +33,10 @@ while True:
             (topLeft, topRight, botRight, botLeft) = m_corners
         
             # convert each of the (x, y) pairs to int
-            topRight = (int(topRight[0]), int(topRight[1]))
-            topLeft = (int(topLeft[0]), int(topLeft[1]))
-            botRight = (int(botRight[0]), int(botRight[1]))
-            botLeft = (int(botLeft[0]), int(botLeft[1]))
+            topRight = (topRight[0], topRight[1])
+            topLeft = (topLeft[0], topLeft[1])
+            botRight = (botRight[0], botRight[1])
+            botLeft = (botLeft[0], botLeft[1])
         
             markerCentre = (int((botLeft[0] + topRight[0]) / 2),
                             int((botLeft[1] + topRight[1]) / 2))
@@ -70,9 +71,17 @@ while True:
                                 current_corrects.append(markerId)
             
             frame = services.drawInfos(frame, markerCorner, markerId)
-    os.system('clear')
-    print("Currently correct: ", current_corrects)
+    print('Currently correct: ', current_corrects)
 
+    cv.putText(frame,
+                                'ft: {}ms'.format((time.time_ns() - frametime) / 1000000),
+                                (50, 50),
+                                cv.FONT_HERSHEY_SIMPLEX,
+                                0.7,
+                                (100, 5, 255),
+                                2
+                            )
+    
     # render output
     cv.imshow("Output", frame)
     key = cv.waitKey(1)
