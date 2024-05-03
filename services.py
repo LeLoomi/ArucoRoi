@@ -6,9 +6,7 @@ from types import SimpleNamespace
 # read json from config and return data
 def load_config_data(path: str):
     with open(path, 'r') as f:
-        data = f.read()
-    # convert json to object
-    data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        data = json.load(f)
     return data
 
 # helper to calculate if point is inside circle area
