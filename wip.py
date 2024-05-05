@@ -12,10 +12,11 @@ detector = cv.aruco.ArucoDetector(arucoDict, arucoParams)
 data = services.load_config_data('./config.json')
 onscreen_markers = dict()   # to store id and position, updated per frame with whats on screen
 region_markers = dict()     # loaded from config at start of run
-calculated_rois = dict()       # updated each frame, with ready to use coords now
+calculated_rois = dict()    # updated each frame, with ready to use coords now
+correct_markers = dict()    # updated each frame, with the currently correnctly placed markers
 
 # warm up and make camera available
-stream = VideoStream(src=1).start()
+stream = VideoStream(src=0).start()
 time.sleep(1.5)
 
 # load all regions with their align ids for quick, streamlined access
@@ -30,11 +31,13 @@ print(region_markers)
 
 while True:
     frametime = time.time_ns()
+    
+    calculated_rois.clear()
+    correct_markers.clear()
     frame = stream.read()
+    
     # we detect in grayscale in order to cope a bit with micro-light-differences
     (detected_corners, detected_ids, rejected) = detector.detectMarkers(cv.cvtColor(frame, cv.COLOR_BGR2GRAY))
-
-    calculated_rois.clear()
 
     if len(detected_corners) > 0:    # check if we even found a marker
         detected_ids = detected_ids.flatten()
@@ -65,8 +68,9 @@ while True:
                     'desired_marker_id': roi['desired_marker_id']
                 }
         
-        # draw rois borders onto frame
+        # loop rois on screen right now
         for roi_name in calculated_rois:
+            # draw roi info onto frame
             frame = cv.circle(
                     frame,
                     calculated_rois[roi_name]['coords'],
@@ -86,9 +90,18 @@ while True:
                 (100, 5, 255),
                 3
             )
-
-
-
+            
+            # check if any desired markers are in their roi
+            if calculated_rois[roi_name]['desired_marker_id'] in onscreen_markers:
+                culprit_id = calculated_rois[roi_name]['desired_marker_id']
+                if services.is_inside_circle(
+                    calculated_rois[roi_name]['coords'][0],
+                    calculated_rois[roi_name]['coords'][1],
+                    calculated_rois[roi_name]['radius'],
+                    onscreen_markers[culprit_id]['marker_center'][0],
+                    onscreen_markers[culprit_id]['marker_center'][1]
+                ):
+                    correct_markers[culprit_id] = {'roi_name': roi_name}
 
     # put frametime text on frame
     cv.putText(frame,

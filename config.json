@@ -2,26 +2,26 @@
   "region_marker": [
     {
       "align_id": 620,
-      "align_name": "torso-centre",
+      "align_name": "torso-center",
       "rois": [
         {
           "reg_name": "V1",
-          "reg_dX": 0,
-          "reg_dY": 250,
-          "reg_radius": 300,
+          "reg_dX": 250,
+          "reg_dY": 200,
+          "reg_radius": 100,
           "desired_marker_id": 601
         }
       ]
     },
     {
       "align_id": 630,
-      "align_name": "torso-centre",
+      "align_name": "left-hand",
       "rois": [
         {
           "reg_name": "V2",
-          "reg_dX": 0,
-          "reg_dY": 250,
-          "reg_radius": 300,
+          "reg_dX": -30,
+          "reg_dY": -200,
+          "reg_radius": 100,
           "desired_marker_id": 602
         }
       ]
