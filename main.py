@@ -26,19 +26,19 @@ def init():
             'align_name:': culprit['align_name'],
             'rois': culprit['rois']
         }
+        
 
 # use this to detect in still images; output will be shown on screen and saved in ./results
-def image_detect(path):
+def image_detect(frame, *args):
     init()
-    frame = cv.imread(path)
     
     # all of the detection happens here, mutating the result dicts in place over here
     services.detect_and_write(frame, config_data, detector, onscreen_markers, region_markers, calculated_rois, correct_markers)
     
     cv.imwrite('./results/{}.png'.format(time.time_ns()), frame)
     
-    cv.imshow("Output", frame)
-    cv.waitKey()
+    return frame, correct_markers
+
 
 # use this to detect markers in leve video, with visual feedback
 def video_detect(camera_index):
@@ -77,7 +77,8 @@ def video_detect(camera_index):
 
 
 def main():
-    image_detect('./images/test1.png')
+    img = cv.imread('./images/test1.png')
+    image_detect(img)
     #video_detect(1)
 
 # run example main if not used as package
