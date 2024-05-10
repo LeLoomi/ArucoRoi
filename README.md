@@ -13,7 +13,7 @@ In here you define all of your ROIs and their desired markers. Identities and po
 {
   "region_marker": [
     {
-      "align_id": 620,              // if of marker that ROIs will be in delta to
+      "align_id": 620,              // id of marker that ROIs will be in delta to
       "align_name": "torso-center", // purely for your information
       "rois": [                     // all ROIs attached to the marker
         {
