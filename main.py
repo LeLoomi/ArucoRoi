@@ -28,7 +28,8 @@ def init():
         }
         
 
-# use this to detect in still images; output will be shown on screen and saved in ./results
+# use this to detect in still images; output frame will be saved in ./results (only if folder exists)
+# returns the frame with all annotations (rois, markers and if they're in the correct roi) as well as all correct markers in a a dict
 def image_detect(frame, *args):
     init()
     
@@ -41,6 +42,7 @@ def image_detect(frame, *args):
 
 
 # use this to detect markers in leve video, with visual feedback
+# not returning anything right now
 def video_detect(camera_index):
     init()
     

@@ -2,10 +2,12 @@
 
 Util to track [AruCo Marker](https://www.uco.es/investiga/grupos/ava/portfolio/aruco/) positions and identities in camera space in relation to predefined <b>regions of interest</b>.
 
-<p> Meant to be used on live video but trivially easy to adapt for still images.
-<br> <sup><i>might directly implement support in future idk</i></sup>
+<p> You can use this to track / detect in still frames and live video.
+
+> It is recommmended to use the stil image detect (returning a dict with all correct markers and their roi). Use the video detect (wich displays you a live feed, quit with q) for debugging your config.json - hot reload will be implemented later down the line)
 
 ### How to use `config.json`:
+In here you define all of your ROIs and their desired markers. Identities and positions of markers not attached in the config will still be tracked and logged in the `onscreen_markers` dict.
 
 ```` JSON
 {
