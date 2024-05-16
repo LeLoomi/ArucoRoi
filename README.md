@@ -4,9 +4,23 @@ Util to track [AruCo Marker](https://www.uco.es/investiga/grupos/ava/portfolio/a
 
 <p> You can use this to track / detect in still frames and live video.
 
-> It is recommmended to use the stil image detect (returning a dict with all correct markers and their roi). Use the video detect (wich displays you a live feed, quit with q) for debugging your config.json - hot reload will be implemented later down the line)
+> It is recommmended to use the still image detection. Use video detection for debugging your config.json since the display loop will thread-block.
+> - Hot-reload for the config file is a planned feature.
+> - If you want to detect in video, simply call image_detect each frame
+> - Currently, image_detect() reads the config file everytime, costing performance.
+> <br><sup><i>This will be fixed when hot reload is implemented.</i></sup>
 
-### How to use `config.json`:
+### How to use
+- Import `Detector` from `ArucoRoi.detector`
+- Instantiate a detector object
+- Call `frame, correct_markers = detector_object.image_detect(img)`
+    - <i>img</i> is the opencv Image object you want to detect on
+    - <i>frame</i> is img but processed, meaning annotated with marker ids, rois (+names), correctness markings
+    - <i>correct_markers</i> is a dict with
+        <br>-> the correctly placed markers id as key
+        <br>-> a field <i>roi_name</i> containing the name of the ROI the marker is correctly placed in
+
+### How to setup `config.json`:
 In here you define all of your ROIs and their desired markers. Identities and positions of markers not attached in the config will still be tracked and logged in the `onscreen_markers` dict.
 
 ```` JSON
