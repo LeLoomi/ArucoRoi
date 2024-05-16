@@ -16,7 +16,7 @@ def is_inside_circle(area_x, area_y, area_radius, culprit_x, culprit_y) -> bool:
     )
 
 # function that detects markers and MUTATES the passed in dicts
-def detect_and_write(frame, config_data, detector, onscreen_markers, region_markers, calculated_rois, correct_markers):
+def detect_and_write(frame, detector, onscreen_markers, region_markers, calculated_rois, correct_markers):
     calculated_rois.clear()
     correct_markers.clear()
     
