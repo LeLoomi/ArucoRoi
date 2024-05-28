@@ -4,11 +4,10 @@ Util to track [AruCo Marker](https://www.uco.es/investiga/grupos/ava/portfolio/a
 
 <p> You can use this to track / detect in still frames and live video.
 
-> It is recommmended to use the still image detection. Use video detection for debugging your config.json since the display loop will thread-block.
-> - Hot-reload for the config file is a planned feature.
+> It is recommmended to use the still image detection. Use video detection for debugging your config.json since the display loop will thread-block. Video detection hot-reloads the config, making it a perfect tool to write your config with live feedback.
 > - If you want to detect in video, simply call image_detect each frame
 > - Currently, image_detect() reads the config file everytime, costing performance.
-> <br><sup><i>This will be fixed when hot reload is implemented.</i></sup>
+> <br><sup><i>This will be fixed in the future.</i></sup>
 
 ### How to use
 - Import `Detector` from `ArucoRoi.detector`
