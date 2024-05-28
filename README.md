@@ -27,15 +27,17 @@ In here you define all of your ROIs and their desired markers. Identities and po
 {
   "region_marker": [
     {
-      "align_id": 620,              // id of marker that ROIs will be in delta to
-      "align_name": "torso-center", // purely for your information
-      "rois": [                     // all ROIs attached to the marker
+      "align_id": 620,                // id of marker that ROIs will be in delta to
+      "align_name": "torso-center",   // purely for your information
+      "rois": [                       // all ROIs attached to the marker
         {
-          "reg_name": "V1",         // ROI display name and internal dict key
-          "reg_dX": 250,            // ROI center coords in delta
-          "reg_dY": 200,            // to align marker camera space position
-          "reg_radius": 100,        // ROI radius (they're all circles rn)
-          "desired_marker_id": 601  // id of marker that should be inside the ROI
+          "reg_name": "V1",           // ROI display name and internal dict key
+          "reg_desc": "i'm a circle",
+          "reg_shape": "circle",      // available: 'circle', 'rectangle' (rect see below)
+          "reg_dX": 250,              // ROI center coords in delta
+          "reg_dY": 200,              // to align marker camera space position
+          "reg_radius": 100,          // ROI radius (specific to circle rois!)
+          "desired_marker_id": 601    // id of marker that should be inside the ROI
         }
       ]
     },
@@ -45,9 +47,12 @@ In here you define all of your ROIs and their desired markers. Identities and po
       "rois": [
         {
           "reg_name": "V2",
-          "reg_dX": -30,
-          "reg_dY": -200,
-          "reg_radius": 100,
+          "reg_desc": "i'm a rectangle",
+          "reg_shape": "rectangle",
+          "reg_dX": 0,
+          "reg_dY": 200,
+          "reg_width": 200,           // roi width (specific for rect rois!)
+          "reg_height": 150,          // roi height (specific for rect rois!)
           "desired_marker_id": 602
         }
       ]

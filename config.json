@@ -6,6 +6,8 @@
       "rois": [
         {
           "reg_name": "V1",
+          "reg_desc": "i'm a circle",
+          "reg_shape": "circle",
           "reg_dX": 200,
           "reg_dY": 200,
           "reg_radius": 150,
@@ -19,9 +21,12 @@
       "rois": [
         {
           "reg_name": "V2",
-          "reg_dX": -30,
-          "reg_dY": -200,
-          "reg_radius": 100,
+          "reg_desc": "i'm a rectangle",
+          "reg_shape": "rectangle",
+          "reg_dX": 0,
+          "reg_dY": 200,
+          "reg_width": 200,
+          "reg_height": 150,
           "desired_marker_id": 602
         }
       ]
