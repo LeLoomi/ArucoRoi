@@ -156,7 +156,10 @@ def detect_and_write(frame, detector, onscreen_markers, region_markers, calculat
                         ): inside_flag = True
                 
                 if inside_flag == True:
-                    correct_markers[culprit_id] = {'roi_name': roi_name}
+                    correct_markers[culprit_id] = {
+                        'roi_name': roi_name,
+                        'roi_desc': calculated_rois[roi_name]['desc']
+                    }
                     cv.putText(frame,
                         '*',
                         (
