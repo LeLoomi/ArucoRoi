@@ -6,9 +6,9 @@
       "rois": [
         {
           "reg_name": "V1",
-          "reg_dX": 250,
+          "reg_dX": 200,
           "reg_dY": 200,
-          "reg_radius": 100,
+          "reg_radius": 150,
           "desired_marker_id": 601
         }
       ]

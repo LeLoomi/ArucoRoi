@@ -15,8 +15,7 @@ class Detector:
     detector = cv.aruco.ArucoDetector(arucoDict, arucoParams)
 
     def __init__(self, config_path):
-        self.config_path = config_path
-        self.config_data = services.load_config_data(config_path)
+        self.load_config(config_path)
         
         # load all regions with their align ids for quick, streamlined access
         for culprit in self.config_data['region_marker']:
@@ -26,11 +25,16 @@ class Detector:
             }
 
     def reload_config(self):
-        self.config_data = services.load_config_data(self.config_path)
+        self.load_config(self.config_path)
+        for culprit in self.config_data['region_marker']:
+            self.region_markers[culprit['align_id']] = {
+                'align_name:': culprit['align_name'],
+                'rois': culprit['rois']
+            }
     
     def load_config(self, config_path):
         self.config_path = config_path
-        self.reload_config()
+        self.config_data = services.load_config_data(config_path)
 
     # use this to detect in still images; output frame will be saved in ./results (only if folder exists)
     # returns the frame with all annotations (rois, markers and if they're in the correct roi) as well as all correct markers in a a dict
@@ -45,8 +49,6 @@ class Detector:
     # use this to detect markers in leve video, with visual feedback
     # not returning anything right now
     def video_detect(self, camera_index):
-        self.init()
-        
         # warm up and make camera available
         stream = VideoStream(src=camera_index).start()
         time.sleep(1.5)
@@ -54,9 +56,10 @@ class Detector:
         while True:
             frametime = time.time_ns()
             frame = stream.read()
+            self.reload_config()
             
             # all of the detection happens here, mutating the result dicts in place over here
-            services.detect_and_write(frame, self.config_data, self.detector, self.onscreen_markers, self.region_markers, self.calculated_rois, self.correct_markers)
+            services.detect_and_write(frame, self.detector, self.onscreen_markers, self.region_markers, self.calculated_rois, self.correct_markers)
             
             # put frametime text on frame
             cv.putText(frame,
