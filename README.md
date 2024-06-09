@@ -16,7 +16,7 @@ Util to track [AruCo Marker](https://www.uco.es/investiga/grupos/ava/portfolio/a
     - <i>img</i> is the opencv Image object you want to detect on
     - <i>frame</i> is img but processed, meaning annotated with marker ids, rois (+names), correctness markings
     - <i>roi_statuses</i> is a dict with
-        <br>-> the correctly placed markers id as key
+        <br>-> the target marker as key
         <br>-> a field <i>roi_name</i> containing the name of the markers target ROI
         <br>-> a field <i>roi_desc</i> containing the description of the target ROI
         <br>-> a field <i>fullfilled</i> which is True if the target marker is inside, False if outside of the ROI
