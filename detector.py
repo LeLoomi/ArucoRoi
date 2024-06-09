@@ -7,7 +7,7 @@ class Detector:
     onscreen_markers = dict()   # to store id and position, updated per frame with whats on screen
     region_markers = dict()     # loaded from config at start of run
     calculated_rois = dict()    # updated each frame, with ready to use coords now
-    correct_markers = dict()    # updated each frame, with the currently correnctly placed markers
+    roi_statuses = dict()       # updated each frame, every target marker with its roi info (name, desc, fullfilled?). Key is target marker ID
     
     # initialize detector
     arucoDict = cv.aruco.getPredefinedDictionary(cv.aruco.DICT_4X4_1000)    # 1000 since we're using 60X as IDs for the 1..6 electrodes
@@ -39,12 +39,23 @@ class Detector:
     # use this to detect in still images; output frame will be saved in ./results (only if folder exists)
     # returns the frame with all annotations (rois, markers and if they're in the correct roi) as well as all correct markers in a a dict
     def image_detect(self, frame, *args):
+        frametime = time.time_ns()
+        
         # all of the detection happens here, mutating the result dicts in place over here
-        services.detect_and_write(frame, self.detector, self.onscreen_markers, self.region_markers, self.calculated_rois, self.correct_markers)
+        services.detect_and_write(frame, self.detector, self.onscreen_markers, self.region_markers, self.calculated_rois, self.roi_statuses)
+        
+        # write frametime
+        cv.putText(frame,
+                    'ft: {} ms'.format(((time.time_ns() - frametime) / 1000000).__round__(1)),
+                    (50, 50),
+                    cv.FONT_HERSHEY_SIMPLEX,
+                    0.7,
+                    (100, 5, 255),
+                    2
+                )
         
         cv.imwrite('./results/{}.png'.format(time.time_ns()), frame)
-        
-        return frame, self.correct_markers
+        return frame, self.roi_statuses
 
     # use this to detect markers in leve video, with visual feedback
     # not returning anything right now

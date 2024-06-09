@@ -24,9 +24,9 @@ def is_inside_rectangle(coord_x, coord_y, size, culprit_x, culprit_y) -> bool:
     )
 
 # function that detects markers and MUTATES the passed in dicts
-def detect_and_write(frame, detector, onscreen_markers, region_markers, calculated_rois, correct_markers):
+def detect_and_write(frame, detector, onscreen_markers, region_markers, calculated_rois, roi_statuses):
     calculated_rois.clear()
-    correct_markers.clear()
+    roi_statuses.clear()
     
     # we detect in grayscale in order to cope a bit with micro-light-differences
     (detected_corners, detected_ids, rejected) = detector.detectMarkers(cv.cvtColor(frame, cv.COLOR_BGR2GRAY))
@@ -133,7 +133,7 @@ def detect_and_write(frame, detector, onscreen_markers, region_markers, calculat
                 2
             )
             
-            # check if any desired markers are in their roi
+            # check if any desired markers are in their roi, set flag and mark with star if so
             if calculated_rois[roi_name]['desired_marker_id'] in onscreen_markers:
                 culprit_id = calculated_rois[roi_name]['desired_marker_id']
                 inside_flag = False
@@ -155,19 +155,22 @@ def detect_and_write(frame, detector, onscreen_markers, region_markers, calculat
                         onscreen_markers[culprit_id]['marker_center'][1]
                         ): inside_flag = True
                 
-                if inside_flag == True:
-                    correct_markers[culprit_id] = {
-                        'roi_name': roi_name,
-                        'roi_desc': calculated_rois[roi_name]['desc']
-                    }
+                if inside_flag:
                     cv.putText(frame,
-                        '*',
-                        (
-                            onscreen_markers[culprit_id]['marker_center'][0] + 20,
-                            onscreen_markers[culprit_id]['marker_center'][1] - 20
-                        ),
-                        cv.FONT_HERSHEY_SIMPLEX,
-                        1,
-                        (0, 255, 0),
-                        4
-                    )
+                    '*',
+                    (
+                        onscreen_markers[culprit_id]['marker_center'][0] + 20,
+                        onscreen_markers[culprit_id]['marker_center'][1] - 20
+                    ),
+                    cv.FONT_HERSHEY_SIMPLEX,
+                    1,
+                    (0, 255, 0),
+                    4
+                )
+                
+                # write the roi_statuses and set inside flag accordingly
+                roi_statuses[culprit_id] = {
+                    'roi_name': roi_name,
+                    'roi_desc': calculated_rois[roi_name]['desc'],
+                    'fullfilled': inside_flag
+                }
