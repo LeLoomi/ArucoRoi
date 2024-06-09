@@ -12,12 +12,14 @@ Util to track [AruCo Marker](https://www.uco.es/investiga/grupos/ava/portfolio/a
 ### How to use
 - Import `Detector` from `ArucoRoi.detector`
 - Instantiate a detector object
-- Call `frame, correct_markers = detector_object.image_detect(img)`
+- Call `frame, roi_statuses = detector_object.image_detect(img)`
     - <i>img</i> is the opencv Image object you want to detect on
     - <i>frame</i> is img but processed, meaning annotated with marker ids, rois (+names), correctness markings
-    - <i>correct_markers</i> is a dict with
+    - <i>roi_statuses</i> is a dict with
         <br>-> the correctly placed markers id as key
-        <br>-> a field <i>roi_name</i> containing the name of the ROI the marker is correctly placed in
+        <br>-> a field <i>roi_name</i> containing the name of the markers target ROI
+        <br>-> a field <i>roi_desc</i> containing the description of the target ROI
+        <br>-> a field <i>fullfilled</i> which is True if the target marker is inside, False if outside of the ROI
 
 ### How to setup `config.json`:
 In here you define all of your ROIs and their desired markers. Identities and positions of markers not attached in the config will still be tracked and logged in the `onscreen_markers` dict.
