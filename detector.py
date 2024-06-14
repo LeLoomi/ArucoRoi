@@ -70,7 +70,7 @@ class Detector:
             self.reload_config()
             
             # all of the detection happens here, mutating the result dicts in place over here
-            services.detect_and_write(frame, self.detector, self.onscreen_markers, self.region_markers, self.calculated_rois, self.correct_markers)
+            services.detect_and_write(frame, self.detector, self.onscreen_markers, self.region_markers, self.calculated_rois, self.roi_statuses)
             
             # put frametime text on frame
             cv.putText(frame,
