@@ -1,7 +1,7 @@
 import cv2 as cv
 from imutils.video import VideoStream
 import time
-import services
+from . import services
 
 class Detector:
     onscreen_markers = dict()   # to store id and position, updated per frame with whats on screen
