@@ -29,7 +29,8 @@ def detect_and_write(frame, detector, onscreen_markers, region_markers, calculat
     roi_statuses.clear()
     
     # we detect in grayscale in order to cope a bit with micro-light-differences
-    (detected_corners, detected_ids, rejected) = detector.detectMarkers(cv.cvtColor(frame, cv.COLOR_BGR2GRAY))
+    #(detected_corners, detected_ids, rejected) = detector.detectMarkers(cv.cvtColor(frame, cv.COLOR_BGR2GRAY))
+    (detected_corners, detected_ids, rejected) = detector.detectMarkers(frame)
 
     if len(detected_corners) > 0:    # check if we even found a marker
         detected_ids = detected_ids.flatten()

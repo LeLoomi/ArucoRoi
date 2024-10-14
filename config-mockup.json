@@ -1,0 +1,35 @@
+{
+  "region_marker": [
+    {
+      "align_id": 630,
+      "align_name": "torso-center",
+      "rois": [
+        {
+          "reg_name": "V1",
+          "reg_desc": "i'm a circle",
+          "reg_shape": "circle",
+          "reg_dX": 580,
+          "reg_dY": 0,
+          "reg_radius": 170,
+          "desired_marker_id": 601
+        }
+      ]
+    },
+    {
+      "align_id": 620,
+      "align_name": "left-hand",
+      "rois": [
+        {
+          "reg_name": "V2",
+          "reg_desc": "i'm a rectangle",
+          "reg_shape": "rectangle",
+          "reg_dX": 330,
+          "reg_dY": -100,
+          "reg_width": 500,
+          "reg_height": 270,
+          "desired_marker_id": 602
+        }
+      ]
+    }
+  ]
+}
