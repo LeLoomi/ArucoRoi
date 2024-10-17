@@ -1,5 +1,4 @@
 import cv2 as cv
-from imutils.video import VideoStream
 import time
 import services
 
@@ -10,7 +9,7 @@ class Detector:
     roi_statuses = dict()       # updated each frame, every target marker with its roi info (name, desc, fullfilled?). Key is target marker ID
     
     # initialize detector
-    arucoDict = cv.aruco.getPredefinedDictionary(cv.aruco.DICT_4X4_1000)    # 1000 since we're using 60X as IDs for the 1..6 electrodes
+    arucoDict = cv.aruco.getPredefinedDictionary(cv.aruco.DICT_4X4_1000)    # 1000 for flexibility
     arucoParams = cv.aruco.DetectorParameters()
     detector = cv.aruco.ArucoDetector(arucoDict, arucoParams)
 
@@ -61,12 +60,12 @@ class Detector:
     # not returning anything right now
     def video_detect(self, camera_index):
         # warm up and make camera available
-        stream = VideoStream(src=camera_index).start()
+        stream = cv.VideoCapture(src=camera_index, apiPreference=cv.CAP_DSHOW)
         time.sleep(1.5)
         
         while True:
             frametime = time.time_ns()
-            frame = stream.read()
+            ret, frame = stream.read()
             self.reload_config()
             
             # all of the detection happens here, mutating the result dicts in place over here
@@ -90,4 +89,4 @@ class Detector:
                 break
         
         cv.destroyAllWindows()
-        stream.stop()
+        stream.release()
