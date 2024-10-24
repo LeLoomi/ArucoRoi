@@ -1,33 +1,126 @@
 {
   "region_marker": [
     {
-      "align_id": 620,
-      "align_name": "torso-center",
+      "align_id": 19,
+      "align_name": "central_chest",
       "rois": [
         {
-          "reg_name": "V1",
-          "reg_desc": "i'm a circle",
+          "reg_name": "rV1",
+          "reg_desc": "",
           "reg_shape": "circle",
-          "reg_dX": 200,
+          "reg_dX": -100,
+          "reg_dY": 130,
+          "reg_radius": 40,
+          "desired_marker_id": 11
+        },
+        {
+          "reg_name": "rV2",
+          "reg_desc": "",
+          "reg_shape": "circle",
+          "reg_dX": 40,
+          "reg_dY": 110,
+          "reg_radius": 40,
+          "desired_marker_id": 12
+        },
+        {
+          "reg_name": "rV3",
+          "reg_desc": "",
+          "reg_shape": "circle",
+          "reg_dX": 150,
+          "reg_dY": 130,
+          "reg_radius": 40,
+          "desired_marker_id": 13
+        },
+        {
+          "reg_name": "rV4",
+          "reg_desc": "",
+          "reg_shape": "circle",
+          "reg_dX": 245,
           "reg_dY": 200,
-          "reg_radius": 150,
-          "desired_marker_id": 601
+          "reg_radius": 40,
+          "desired_marker_id": 14
+        },
+        {
+          "reg_name": "rV5",
+          "reg_desc": "",
+          "reg_shape": "circle",
+          "reg_dX": 340,
+          "reg_dY": 200,
+          "reg_radius": 35,
+          "desired_marker_id": 15
+        },
+        {
+          "reg_name": "rV6",
+          "reg_desc": "",
+          "reg_shape": "circle",
+          "reg_dX": 360,
+          "reg_dY": 200,
+          "reg_radius": 35,
+          "desired_marker_id": 16
         }
       ]
     },
     {
-      "align_id": 630,
-      "align_name": "left-hand",
+      "align_id": 29,
+      "align_name": "right_forearm",
       "rois": [
         {
-          "reg_name": "V2",
-          "reg_desc": "i'm a rectangle",
+          "reg_name": "rRed",
+          "reg_desc": "Region for right hand",
           "reg_shape": "rectangle",
-          "reg_dX": 0,
-          "reg_dY": 200,
+          "reg_dX": -50,
+          "reg_dY": 10,
+          "reg_width": 110,
+          "reg_height": 80,
+          "desired_marker_id": 21
+        }
+      ]
+    },
+    {
+      "align_id": 39,
+      "align_name": "left_forearm",
+      "rois": [
+        {
+          "reg_name": "rYellow",
+          "reg_desc": "Region for left hand",
+          "reg_shape": "rectangle",
+          "reg_dX": -55,
+          "reg_dY": 60,
+          "reg_width": 130,
+          "reg_height": 100,
+          "desired_marker_id": 31
+        }
+      ]
+    },
+    {
+      "align_id": 49,
+      "align_name": "left_foot",
+      "rois": [
+        {
+          "reg_name": "rBlack",
+          "reg_desc": "Region for left foot",
+          "reg_shape": "rectangle",
+          "reg_dX": -100,
+          "reg_dY": 150,
           "reg_width": 200,
           "reg_height": 150,
-          "desired_marker_id": 602
+          "desired_marker_id": 41
+        }
+      ]
+    },
+    {
+      "align_id": 59,
+      "align_name": "right_foot",
+      "rois": [
+        {
+          "reg_name": "rGreen",
+          "reg_desc": "Region for right foot",
+          "reg_shape": "rectangle",
+          "reg_dX": -100,
+          "reg_dY": 150,
+          "reg_width": 200,
+          "reg_height": 150,
+          "desired_marker_id": 51
         }
       ]
     }

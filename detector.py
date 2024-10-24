@@ -9,8 +9,14 @@ class Detector:
     roi_statuses = dict()       # updated each frame, every target marker with its roi info (name, desc, fullfilled?). Key is target marker ID
     
     # initialize detector
-    arucoDict = cv.aruco.getPredefinedDictionary(cv.aruco.DICT_4X4_1000)    # 1000 for flexibility
+    arucoDict = cv.aruco.getPredefinedDictionary(cv.aruco.DICT_4X4_100)    # impacts hamming distance and maybe accuracy?
     arucoParams = cv.aruco.DetectorParameters()
+    # reduce expected marker size, to detect small markers
+    arucoParams.minMarkerPerimeterRate *= 1/6
+    arucoParams.minMarkerDistanceRate *= 1/6
+    arucoParams.minCornerDistanceRate *= 1/6
+    arucoParams.cornerRefinementMethod = cv.aruco.CORNER_REFINE_SUBPIX
+    #arucoParams.useAruco3Detection = False     # It's supposedly worse at detecting small markers
     detector = cv.aruco.ArucoDetector(arucoDict, arucoParams)
 
     def __init__(self, config_path):
@@ -60,7 +66,7 @@ class Detector:
     # not returning anything right now
     def video_detect(self, camera_index):
         # warm up and make camera available
-        stream = cv.VideoCapture(src=camera_index, apiPreference=cv.CAP_DSHOW)
+        stream = cv.VideoCapture(index=camera_index, apiPreference=cv.CAP_DSHOW)
         time.sleep(1.5)
         
         while True:
