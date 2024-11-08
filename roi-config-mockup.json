@@ -1,7 +1,7 @@
 {
   "region_marker": [
     {
-      "align_id": 630,
+      "align_id": 29,
       "align_name": "torso-center",
       "rois": [
         {
@@ -11,12 +11,12 @@
           "reg_dX": 580,
           "reg_dY": 0,
           "reg_radius": 170,
-          "desired_marker_id": 601
+          "desired_marker_id": 21
         }
       ]
     },
     {
-      "align_id": 620,
+      "align_id": 13,
       "align_name": "left-hand",
       "rois": [
         {
@@ -27,7 +27,7 @@
           "reg_dY": -100,
           "reg_width": 500,
           "reg_height": 270,
-          "desired_marker_id": 602
+          "desired_marker_id": 14
         }
       ]
     }

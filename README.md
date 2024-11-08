@@ -20,6 +20,10 @@ Util to track [AruCo Marker](https://www.uco.es/investiga/grupos/ava/portfolio/a
         <br>-> a field <i>roi_name</i> containing the name of the markers target ROI
         <br>-> a field <i>roi_desc</i> containing the description of the target ROI
         <br>-> a field <i>fulfilled</i> which is True if the target marker is inside, False if outside of the ROI
+        <br>-> a field <i>deviation_x</i> which is the desired markers X deviation from the center of the ROI
+        <br>-> a field <i>deviation_y</i> which is the desired markers Y deviation from the center of the ROI
+        'deviation_x': deviation_x,
+                    'deviation_y': deviation_y
 
 ### How to setup `config.json`:
 In here you define all of your ROIs and their desired markers. Identities and positions of markers not attached in the config will still be tracked and logged in the `onscreen_markers` dict.
@@ -35,7 +39,7 @@ In here you define all of your ROIs and their desired markers. Identities and po
           "reg_name": "V1",           // ROI display name and internal dict key
           "reg_desc": "i'm a circle",
           "reg_shape": "circle",      // available: 'circle', 'rectangle' (rect see below)
-          "reg_dX": 250,              // ROI center coords in delta
+          "reg_dX": 250,              // ROI center coords in delta (also in the center for rectangles!)
           "reg_dY": 200,              // to align marker camera space position
           "reg_radius": 100,          // ROI radius (specific to circle rois!)
           "desired_marker_id": 601    // id of marker that should be inside the ROI
@@ -65,4 +69,3 @@ In here you define all of your ROIs and their desired markers. Identities and po
 ### Dependencies:
 - OpenCV
 - Numpy
-- imutils

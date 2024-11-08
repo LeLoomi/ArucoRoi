@@ -17,10 +17,10 @@ def is_inside_circle(center_x, center_y, area_radius, culprit_x, culprit_y) -> b
 
 def is_inside_rectangle(coord_x, coord_y, size, culprit_x, culprit_y) -> bool:
     return(
-        coord_x < culprit_x
-        and coord_y < culprit_y
-        and culprit_x < coord_x + size[0]
-        and culprit_y < coord_y + size[1]
+            ( coord_x - 0.5 * size[0] )  < culprit_x
+        and ( coord_y - 0.5 * size[1] ) < culprit_y
+        and culprit_x < ( coord_x + 0.5 * size[0] )
+        and culprit_y < ( coord_y + 0.5 * size[1] )
     )
 
 # function that detects markers and MUTATES the passed in dicts
@@ -59,7 +59,7 @@ def detect_and_write(frame, detector, onscreen_markers, region_markers, calculat
                 2
             )
         
-        # get rois and update their coords, draw circle
+        # get rois and update their coords, draw shape
         for match_id in set(region_markers).intersection(set(onscreen_markers)):
             for roi in region_markers[match_id]['rois']:
                 # handle different roi shapes and save info into calculated_rois
@@ -79,8 +79,11 @@ def detect_and_write(frame, detector, onscreen_markers, region_markers, calculat
                         'desc': roi['reg_desc'],
                         'shape': roi['reg_shape'],
                         'coords': np.add(
-                            onscreen_markers[match_id]['marker_center'],
-                            ( roi['reg_dX'], roi['reg_dY'] )
+                            onscreen_markers[match_id]['marker_center'],    # we add half of h,w to get coords in the middle of the rect
+                            (
+                                roi['reg_dX'] + round(0.5 * roi['reg_height']),
+                                roi['reg_dY'] + round(0.5 * roi['reg_width'])
+                            )
                         ),
                         'size': ( roi['reg_width'], roi['reg_height'] ),
                         'desired_marker_id': roi['desired_marker_id']
@@ -100,10 +103,21 @@ def detect_and_write(frame, detector, onscreen_markers, region_markers, calculat
                         3
                     )
             if roi['shape'] == 'rectangle':
-                frame = cv.rectangle(
+                frame = cv.circle(
                         frame,
                         roi['coords'],
-                        np.add(roi['coords'], roi['size']),
+                        10,
+                        (100, 5, 255),
+                        3
+                    )
+                frame = cv.rectangle(
+                        frame,
+                        np.subtract(roi['coords'],  # opencv starts drawing in the top left corner of a rect but we provide the middle as coords
+                            ( round(0.5 * roi['size'][0]), round(0.5 * roi['size'][1]) )
+                        ),
+                        np.add(roi['coords'],
+                            ( round(0.5 * roi['size'][0]), round(0.5 * roi['size'][1]) )
+                        ),
                         (100, 5, 255),
                         3
                     )
@@ -169,9 +183,15 @@ def detect_and_write(frame, detector, onscreen_markers, region_markers, calculat
                     4
                 )
                 
-                # write the roi_statuses and set inside flag accordingly
+                # calculate marker deviation from perfect roi-center placement
+                deviation_x = calculated_rois[roi_name]['coords'][0] - onscreen_markers[culprit_id]['marker_center'][0]
+                deviation_y = calculated_rois[roi_name]['coords'][1] - onscreen_markers[culprit_id]['marker_center'][1]
+                
+                # write the roi_statuses and set inside flag accordingly, set coordinate deviation info
                 roi_statuses[culprit_id] = {
                     'roi_name': roi_name,
                     'roi_desc': calculated_rois[roi_name]['desc'],
-                    'fulfilled': inside_flag
+                    'fulfilled': inside_flag,
+                    'deviation_x': deviation_x,
+                    'deviation_y': deviation_y
                 }
