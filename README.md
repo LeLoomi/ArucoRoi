@@ -19,7 +19,7 @@ Util to track [AruCo Marker](https://www.uco.es/investiga/grupos/ava/portfolio/a
         <br>-> the target marker as key
         <br>-> a field <i>roi_name</i> containing the name of the markers target ROI
         <br>-> a field <i>roi_desc</i> containing the description of the target ROI
-        <br>-> a field <i>fullfilled</i> which is True if the target marker is inside, False if outside of the ROI
+        <br>-> a field <i>fulfilled</i> which is True if the target marker is inside, False if outside of the ROI
 
 ### How to setup `config.json`:
 In here you define all of your ROIs and their desired markers. Identities and positions of markers not attached in the config will still be tracked and logged in the `onscreen_markers` dict.

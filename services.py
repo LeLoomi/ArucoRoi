@@ -173,5 +173,5 @@ def detect_and_write(frame, detector, onscreen_markers, region_markers, calculat
                 roi_statuses[culprit_id] = {
                     'roi_name': roi_name,
                     'roi_desc': calculated_rois[roi_name]['desc'],
-                    'fullfilled': inside_flag
+                    'fulfilled': inside_flag
                 }
