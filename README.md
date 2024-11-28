@@ -25,6 +25,20 @@ Util to track [AruCo Marker](https://www.uco.es/investiga/grupos/ava/portfolio/a
         'deviation_x': deviation_x,
                     'deviation_y': deviation_y
 
+### Why is my resolution bad
+video_detect:<br>
+You should surrently only run video_detect for creating configs. If your resolution is bad, I recommend telling OpenCV exactly what you want, e.g. for an imaginary camera set a specific capture format and resolution supported by your camera:
+```` Python
+stream.set(cv.CV_CAP_PROP_FOURCC, cv.VideoWriter.fourcc('M', 'J', 'P', 'G'))
+        stream.set(cv.CV_CAP_PROP_FRAME_WIDTH, 3840)
+        stream.set(cv.CV_CAP_PROP_FRAME_HEIGHT, 2160)
+````
+> This has to be "implemented" (copy-pasted) by you, by hand
+
+image_detect:<br>
+Check if your input image is of high enough resolution. If not and you're using OpenCV for capture, you might benefit from the adjustment above.
+
+
 ### How to setup `config.json`:
 In here you define all of your ROIs and their desired markers. Identities and positions of markers not attached in the config will still be tracked and logged in the `onscreen_markers` dict.
 
