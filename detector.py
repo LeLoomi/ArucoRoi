@@ -69,9 +69,9 @@ class Detector:
         stream = cv.VideoCapture(index=camera_index, apiPreference=cv.CAP_ANY)
         
         #! Specific to the HP 960 4K in our physical setup
-        stream.set(cv.CV_CAP_PROP_FOURCC, cv.VideoWriter.fourcc('M', 'J', 'P', 'G'))
-        stream.set(cv.CV_CAP_PROP_FRAME_WIDTH, 3840)
-        stream.set(cv.CV_CAP_PROP_FRAME_HEIGHT, 2160)
+        stream.set(cv.CAP_PROP_FOURCC, cv.VideoWriter.fourcc('M', 'J', 'P', 'G'))
+        stream.set(cv.CAP_PROP_FRAME_WIDTH, 3840)
+        stream.set(cv.CAP_PROP_FRAME_HEIGHT, 2160)
         
         time.sleep(1.5)
         
@@ -94,6 +94,7 @@ class Detector:
                 )
             
             # render output
+            frame = cv.resize(frame, (1778, 1000))
             cv.imshow("Output", frame)
             key = cv.waitKey(1)
             
