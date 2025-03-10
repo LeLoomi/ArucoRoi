@@ -79,10 +79,10 @@ def detect_and_write(frame, detector, onscreen_markers, region_markers, calculat
                         'desc': roi['reg_desc'],
                         'shape': roi['reg_shape'],
                         'coords': np.add(
-                            onscreen_markers[match_id]['marker_center'],    # we add half of h,w to get coords in the middle of the rect
+                            onscreen_markers[match_id]['marker_center'],
                             (
-                                roi['reg_dX'] + round(0.5 * roi['reg_height']),
-                                roi['reg_dY'] + round(0.5 * roi['reg_width'])
+                                roi['reg_dX'],
+                                roi['reg_dY']
                             )
                         ),
                         'size': ( roi['reg_width'], roi['reg_height'] ),
