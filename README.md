@@ -1,3 +1,4 @@
+> Care: while this project _is_ fully usable, it also just a proof of concept that got deadline pushed into being expanded a bit so it could become the base of [a project](https://github.com/LeLoomi/hybparc_aruco). This means that it works, yet is not necessarily well designed.
 # ArucoRoi
 
 Util to track [AruCo Marker](https://www.uco.es/investiga/grupos/ava/portfolio/aruco/) positions and identities in camera space in relation to predefined <b>regions of interest</b>.
