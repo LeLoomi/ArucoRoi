@@ -1,6 +1,7 @@
 import cv2 as cv
 import numpy as np
 import json
+from cv2 import aruco
 
 # read json from config and return data
 def load_config_data(path: str):
@@ -24,7 +25,7 @@ def is_inside_rectangle(coord_x, coord_y, size, culprit_x, culprit_y) -> bool:
     )
 
 # function that detects markers and MUTATES the passed in dicts
-def detect_and_write(frame, detector, onscreen_markers, region_markers, calculated_rois, roi_statuses):
+def detect_and_write_full(frame, detector, onscreen_markers, region_markers, calculated_rois, roi_statuses):
     calculated_rois.clear()
     roi_statuses.clear()
     
@@ -195,3 +196,49 @@ def detect_and_write(frame, detector, onscreen_markers, region_markers, calculat
                     'deviation_x': deviation_x,
                     'deviation_y': deviation_y
                 }
+
+# ? frame=what we detect on; detector=Detector obj; returns the overlay only
+def create_bounds_and_id_overlay(frame: cv.typing.MatLike, detector: aruco.ArucoDetector) -> cv.typing.MatLike:
+    result = np.zeros((frame.shape[0], frame.shape[1], 4), np.uint8) # arg no 3 = 4 so we have 4 channels, 4th is alpha
+    
+    (detected_corners, detected_ids, rejected) = detector.detectMarkers(frame)
+    
+    if len(detected_corners) > 0:    # check if we even found a marker
+        detected_ids = detected_ids.flatten()
+    else:
+        return result
+    
+    # store all markers on screen in the dict, key is marker id
+    for (marker_corners, marker_id) in zip(detected_corners, detected_ids):
+        (c_top_left, c_top_right, c_bot_right, c_bot_left) = marker_corners.reshape((4, 2))
+        
+        # colors have 4th spot 255 for alpha=100%
+        cv.line(result,
+            (int(c_top_left[0]), int(c_top_left[1])),
+            (int(c_top_right[0]), int(c_top_right[1])),
+            (100, 5, 255, 255),
+            2
+        )
+        
+        cv.line(result,
+            (int(c_top_right[0]), int(c_top_right[1])),
+            (int(c_bot_right[0]), int(c_bot_right[1])),
+            (100, 5, 255, 255),
+            2
+        )
+        
+        cv.line(result,
+            (int(c_bot_right[0]), int(c_bot_right[1])),
+            (int(c_bot_left[0]), int(c_bot_left[1])),
+            (100, 5, 255, 255),
+            2
+        )
+        
+        cv.line(result,
+            (int(c_bot_left[0]), int(c_bot_left[1])),
+            (int(c_top_left[0]), int(c_top_left[1])),
+            (100, 5, 255, 255),
+            2
+        )
+        
+    return result

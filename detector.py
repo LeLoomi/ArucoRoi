@@ -47,7 +47,7 @@ class Detector:
         frametime = time.time_ns()
         
         # all of the detection happens here, mutating the result dicts in place over here
-        services.detect_and_write(frame, self.detector, self.onscreen_markers, self.region_markers, self.calculated_rois, self.roi_statuses)
+        services.detect_and_write_full(frame, self.detector, self.onscreen_markers, self.region_markers, self.calculated_rois, self.roi_statuses)
         
         # write frametime
         cv.putText(frame,
@@ -62,6 +62,24 @@ class Detector:
         cv.imwrite('./results/{}.png'.format(time.time_ns()), frame)
         return frame, self.roi_statuses
 
+    def grab_skeleton(self, frame: cv.typing.MatLike, put_frametime=False) -> cv.typing.MatLike:
+        if(put_frametime):
+            frametime = time.time_ns()
+        
+        result = services.create_bounds_and_id_overlay(frame, self.detector)
+        
+        if(put_frametime):
+            cv.putText(result,
+                    'ft: {} ms'.format(((time.time_ns() - frametime) / 1000000).__round__(1)), # pyright: ignore[reportPossiblyUnboundVariable]
+                    (50, 50),
+                    cv.FONT_HERSHEY_SIMPLEX,
+                    0.7,
+                    (100, 5, 255),
+                    2
+                )
+        
+        return result
+
     # use this to detect markers in leve video, with visual feedback
     # not returning anything right now
     def video_detect(self, camera_index):
@@ -75,7 +93,7 @@ class Detector:
             self.reload_config()
             
             # all of the detection happens here, mutating the result dicts in place over here
-            services.detect_and_write(frame, self.detector, self.onscreen_markers, self.region_markers, self.calculated_rois, self.roi_statuses)
+            services.detect_and_write_full(frame, self.detector, self.onscreen_markers, self.region_markers, self.calculated_rois, self.roi_statuses)
             
             # put frametime text on frame
             cv.putText(frame,
