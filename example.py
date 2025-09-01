@@ -15,7 +15,7 @@ while True:
     ret, frame = cap.read()
     
     #result = detector.grab_skeleton(frame)
-    result = detector.grab_skeleton(frame) # pyright: ignore[reportArgumentType]
+    result = detector.grab_skeleton(frame, line_color_bgr=(57, 255, 20), line_thickness=3) # pyright: ignore[reportArgumentType]
     
     cv.imshow("Output", result)
     key = cv.waitKey(1)

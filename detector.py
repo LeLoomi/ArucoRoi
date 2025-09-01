@@ -62,11 +62,11 @@ class Detector:
         cv.imwrite('./results/{}.png'.format(time.time_ns()), frame)
         return frame, self.roi_statuses
 
-    def grab_skeleton(self, frame: cv.typing.MatLike, put_frametime=False) -> cv.typing.MatLike:
+    def grab_skeleton(self, frame: cv.typing.MatLike, line_color_bgr=(1, 5, 0), line_thickness=3, put_frametime=False) -> cv.typing.MatLike:
         if(put_frametime):
             frametime = time.time_ns()
         
-        result = services.create_bounds_and_id_overlay(frame, self.detector)
+        result = services.create_bounds_and_id_overlay(frame, self.detector, line_color_bgr, line_thickness)
         
         if(put_frametime):
             cv.putText(result,
@@ -74,8 +74,8 @@ class Detector:
                     (50, 50),
                     cv.FONT_HERSHEY_SIMPLEX,
                     0.7,
-                    (100, 5, 255),
-                    2
+                    line_color_bgr,
+                    line_thickness
                 )
         
         return result
