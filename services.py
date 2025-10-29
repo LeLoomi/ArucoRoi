@@ -198,7 +198,7 @@ def detect_and_write_full(frame, detector, onscreen_markers, region_markers, cal
                 }
 
 # ? frame=what we detect on; detector=Detector obj; returns the overlay only
-def create_bounds_and_id_overlay(frame: cv.typing.MatLike, detector: aruco.ArucoDetector, line_color, line_thickness) -> cv.typing.MatLike:
+def create_bounds_and_id_overlay(frame: cv.typing.MatLike, detector: aruco.ArucoDetector, line_color_bgra, line_thickness) -> cv.typing.MatLike:
     result = np.zeros((frame.shape[0], frame.shape[1], 4), np.uint8) # arg no 3 = 4 so we have 4 channels, 4th is alpha
     
     (detected_corners, detected_ids, rejected) = detector.detectMarkers(frame)
@@ -216,28 +216,28 @@ def create_bounds_and_id_overlay(frame: cv.typing.MatLike, detector: aruco.Aruco
         cv.line(result,
             (int(c_top_left[0]), int(c_top_left[1])),
             (int(c_top_right[0]), int(c_top_right[1])),
-            line_color,
+            line_color_bgra,
             line_thickness
         )
         
         cv.line(result,
             (int(c_top_right[0]), int(c_top_right[1])),
             (int(c_bot_right[0]), int(c_bot_right[1])),
-            line_color,
+            line_color_bgra,
             line_thickness
         )
         
         cv.line(result,
             (int(c_bot_right[0]), int(c_bot_right[1])),
             (int(c_bot_left[0]), int(c_bot_left[1])),
-            line_color,
+            line_color_bgra,
             line_thickness
         )
         
         cv.line(result,
             (int(c_bot_left[0]), int(c_bot_left[1])),
             (int(c_top_left[0]), int(c_top_left[1])),
-            line_color,
+            line_color_bgra,
             line_thickness
         )
         
