@@ -16,7 +16,7 @@ while True:
     
     #result = detector.grab_skeleton(frame)
     result = detector.grab_skeleton(frame, line_color_bgra=(0, 255, 0, 255), line_thickness=3) # pyright: ignore[reportArgumentType]
-    print(result.shape, result[..., 3].min(), result[..., 3].max())
+
     cv.imshow("Output", result)
     key = cv.waitKey(1)
     
